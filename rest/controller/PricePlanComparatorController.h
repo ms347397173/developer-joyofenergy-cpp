@@ -34,7 +34,7 @@ class PricePlanComparatorController {
     res.keep_alive(req.keep_alive());
     nlohmann::json j;
     for (auto &ele : costs.value()) {
-      ele.second /= 10000;
+      ele.second /= 10000;    //这里是int，会导致除数可能为0，即小于10000的返回为0
     }
     j["pricePlanComparisons"] = costs.value();
     j["pricePlanId"] = current_price_plans[meterId];

@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.19)
 project(developer_joyofenergy_cpp)
 
+SET(CMAKE_CXX_FLAGS "-pthread -fpermissive")
+
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_BINARY_DIR})
 set(CMAKE_CXX_STANDARD 17)
 

@@ -4,11 +4,15 @@
 #include <string>
 #include <utility>
 #include <vector>
+#include <chrono>
 
+//价格计划
 class PricePlan {
   // todo:
  public:
   using time_point_type = std::chrono::time_point<std::chrono::system_clock>;
+
+  //记录一周每天的价格倍率
   class PeakTimeMultiplier {
    public:
     enum DayOfWeek {
@@ -36,6 +40,7 @@ class PricePlan {
 
   int getUnitRate() const { return unitRate; }
 
+  //判断是否加倍，符合对应日期乘N倍，否则返回原价unitRate
   int getPrice(time_point_type dateTime) const {
     auto time_t_dateTime = std::chrono::system_clock::to_time_t(dateTime);
     auto t = std::localtime(&time_t_dateTime);

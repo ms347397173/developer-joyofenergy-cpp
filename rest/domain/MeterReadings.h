@@ -6,6 +6,7 @@
 #include <list>
 #include <string>
 
+//智能表读数类，包含id和多条读数记录，纯读取类，无写入
 class MeterReadings {
  public:
   MeterReadings() {}

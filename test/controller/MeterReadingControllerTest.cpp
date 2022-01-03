@@ -9,6 +9,7 @@ using ::testing::Eq;
 
 namespace http = boost::beast::http;
 
+//模拟http请求测试
 class MeterReadingControllerTest : public ::testing::Test {
  protected:
   std::unordered_map<std::string, std::vector<ElectricityReading>> meterAssociatedReadings;

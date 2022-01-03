@@ -8,6 +8,7 @@ namespace http = beast::http;
 namespace net = boost::asio;
 using tcp = net::ip::tcp;
 
+//http client
 class RestClient {
  public:
   RestClient(const char *host, unsigned short port) : host(host), port(std::to_string(port)) {}
@@ -17,6 +18,7 @@ class RestClient {
     stream.socket().shutdown(tcp::socket::shutdown_both, ec);
   }
 
+  //内部函数供get和post调用
   http::response<http::string_body> Do(http::request<http::string_body> &req) {
     auto const endpoints = resolver.resolve(host, port);
     stream.connect(endpoints);

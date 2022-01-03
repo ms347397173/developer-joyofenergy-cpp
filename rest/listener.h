@@ -5,6 +5,7 @@
 
 #include "session.h"
 
+//监听连接，每个连接创建一个session进行read write
 class listener : public std::enable_shared_from_this<listener> {
   using io_context = boost::asio::io_context;
   using tcp = boost::asio::ip::tcp;

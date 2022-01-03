@@ -6,6 +6,7 @@
 
 #include "RestClient.h"
 
+//依赖RestClient来发起http请求，包含一个server
 class EndpointTest : public ::testing::Test {
  public:
   EndpointTest() { server.run(kHost, kPort); }

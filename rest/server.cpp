@@ -13,6 +13,7 @@ class impl {
   explicit impl(int concurrency) : ioc(concurrency) {
     using reading = MeterReadingController;
     using price_plan = PricePlanComparatorController;
+    //绑定location与函数
     router.to<reading, &reading::Read>(R"(/readings/read/([a-zA-Z0-9_-]+))", electricityReadingService, meterReadingService);
     router.to<reading, &reading::Store>(R"(/readings/store)", electricityReadingService, meterReadingService);
     router.to<price_plan, &price_plan::Compare>(R"(/price-plans/compare-all/([a-zA-Z0-9_-]+))", pricePlanService);
@@ -32,13 +33,13 @@ class impl {
 
  private:
   boost::asio::io_context ioc;
-  std::unordered_map<std::string, std::vector<ElectricityReading>> meterAssociatedReadings{readings()};
+  std::unordered_map<std::string, std::vector<ElectricityReading>> meterAssociatedReadings{readings()}; //获取了5个电表的默认读数列表map
   ElectricityReadingService electricityReadingService{meterAssociatedReadings};
   MeterReadingService meterReadingService{meterAssociatedReadings};
   std::vector<PricePlan> price_plans{pricePlans()};
   PricePlanService pricePlanService{price_plans, meterReadingService};
   router router;
-  std::function<http::response<http::string_body>(const http::request<http::string_body> &)> handler = router.handler();
+  std::function<http::response<http::string_body>(const http::request<http::string_body> &)> handler = router.handler(); 
 };
 }  // namespace server_detail
 

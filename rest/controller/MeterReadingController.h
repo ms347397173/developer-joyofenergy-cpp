@@ -35,6 +35,7 @@ auto renderReadingAsJson(const ElectricityReading &r) {
 }
 }  // namespace detail
 
+//http api 表读写，通过http调用来读表或者存表
 class MeterReadingController {
  public:
   MeterReadingController(ElectricityReadingService &electricityReadingService, MeterReadingService &meterReadingService)
@@ -51,7 +52,7 @@ class MeterReadingController {
     res.set(http::field::content_type, "application/json");
     res.keep_alive(req.keep_alive());
     auto results = nlohmann::json::array();
-    std::transform(readings->begin(), readings->end(), std::back_inserter(results), &detail::renderReadingAsJson);
+    std::transform(readings->begin(), readings->end(), std::back_inserter(results), &detail::renderReadingAsJson);  //每个readings中的调用renderReadingAsJson，然后插入到result中
     nlohmann::json j;
     j["readings"] = results;
     res.body() = j.dump();

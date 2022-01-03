@@ -4,6 +4,7 @@
 #include <chrono>
 #include <ctime>
 
+//时间和读数的简单类，包含一个时间点和一个读数
 class ElectricityReading {
  public:
   using time_point_type = std::chrono::time_point<std::chrono::system_clock>;

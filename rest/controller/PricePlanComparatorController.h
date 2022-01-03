@@ -14,10 +14,12 @@
 
 namespace http = boost::beast::http;
 
+//http api 可以返回表的价格对比列表，以及给出推荐
 class PricePlanComparatorController {
  public:
   PricePlanComparatorController(PricePlanService &pricePlanService) : pricePlanService(pricePlanService) {}
 
+  //返回当前电表的所有价格计划列表，价格
   http::response<http::string_body> Compare(const http::request<http::string_body> &req,
                                             const std::vector<std::string> &queries) {
     const auto &meterId = queries[0];
@@ -41,6 +43,7 @@ class PricePlanComparatorController {
     return res;
   }
 
+  //返回由小到大的花费列表
   http::response<http::string_body> Recommend(const http::request<http::string_body> &req,
                                               const std::vector<std::string> &queries) {
     const auto &meterId = queries[0];

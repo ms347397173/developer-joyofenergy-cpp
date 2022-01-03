@@ -10,6 +10,8 @@
 
 #include "logger.h"
 
+//代表一个http会话
+//读取到的数据转到预先设置的handler回调_函数中，在listener.h中设置
 class session : public std::enable_shared_from_this<session> {
   using error_code = boost::beast::error_code;
   using tcp = boost::asio::ip::tcp;
@@ -32,7 +34,7 @@ class session : public std::enable_shared_from_this<session> {
     // otherwise the operation behavior is undefined.
     req_ = {};
     stream_.expires_after(std::chrono::seconds(30));
-    http::async_read(stream_, buffer_, req_, boost::beast::bind_front_handler(&session::on_read, shared_from_this()));
+    http::async_read(stream_, buffer_, req_, boost::beast::bind_front_handler(&session::on_read, shared_from_this()));  //回调
   }
 
   void on_read(error_code ec, std::size_t bytes_transferred) {
@@ -47,7 +49,7 @@ class session : public std::enable_shared_from_this<session> {
       return fail(ec, "read");
     }
 
-    send(std::move(handler_(req_)));
+    send(std::move(handler_(req_)));  //执行
   }
 
   void on_write(bool close, error_code ec, std::size_t bytes_transferred) {

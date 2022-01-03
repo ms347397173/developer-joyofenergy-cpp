@@ -10,10 +10,12 @@
 namespace beast = boost::beast;
 namespace http = beast::http;
 
+//location绑定类，用mem_fn绑定成员函数，关联path和具体的处理函数，参见server.cpp router.to
 class router {
  public:
   template <class Body = http::string_body>
   auto handler() {
+    //handle的最终函数，这个通过寻找location来选择对应的函数，最终指向router.to绑定的函数
     return [&](const http::request<Body> &req) -> http::response<http::string_body> {
       const auto uri = req.target();
       for (auto &[path, handler] : handlers_) {
@@ -32,7 +34,7 @@ class router {
   template <typename controller_type, auto controller_method, typename... types>
   auto to(const char *path, types &...injections) {
     handlers_[path] = [&](const http::request<http::string_body> &req, const std::vector<std::string> &queries) {
-      return std::mem_fn(controller_method)(controller_type{injections...}, req, queries);
+      return std::mem_fn(controller_method)(controller_type{injections...}, req, queries);  //进行绑定
     };
   }
 

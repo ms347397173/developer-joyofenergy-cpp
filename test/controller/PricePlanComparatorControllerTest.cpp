@@ -10,6 +10,7 @@
 using nlohmann::json;
 using ::testing::Eq;
 
+//价格评估测试
 class PricePlanComparatorControllerTest : public ::testing::Test {
  protected:
   std::unordered_map<std::string, std::vector<ElectricityReading>> meterAssociatedReadings;

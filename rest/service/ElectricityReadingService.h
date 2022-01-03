@@ -8,6 +8,7 @@
 #include <unordered_map>
 #include <vector>
 
+//电量读取服务，和MeterReadingService区别是这个不能修改值
 class ElectricityReadingService {
  public:
   ElectricityReadingService(std::unordered_map<std::string, std::vector<ElectricityReading>> &meterAssociatedReadings)

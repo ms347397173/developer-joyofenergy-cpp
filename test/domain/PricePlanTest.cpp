@@ -4,6 +4,7 @@
 
 using ::testing::Eq;
 
+//对PricePlan类的测试
 TEST(PricePlanTest, GetEnergySupplierShouldReturnTheEnergySupplierGivenInTheConstructor) {
   const std::string energy_supplier = "Energy Supplier Name";
 
@@ -12,6 +13,7 @@ TEST(PricePlanTest, GetEnergySupplierShouldReturnTheEnergySupplierGivenInTheCons
   EXPECT_THAT(p.getEnergySupplier(), energy_supplier);
 }
 
+//2021-09-30 是周四，所以不会乘以10倍系数
 TEST(PricePlanTest, GetPriceShouldReturnTheBasePriceGivenAnOrdinaryDateTime) {
   auto time = detail::fromRfc3339("2021-09-30T06:42:15.725202Z");
   PricePlan::PeakTimeMultiplier peak_time_multiplier(PricePlan::PeakTimeMultiplier::DayOfWeek::WEDNESDAY, 10);
@@ -22,6 +24,7 @@ TEST(PricePlanTest, GetPriceShouldReturnTheBasePriceGivenAnOrdinaryDateTime) {
   EXPECT_THAT(price, 1);
 }
 
+//2021-09-39 是周三，所以会乘以10倍系数
 TEST(PricePlanTest, GetPriceShouldReturnAnExceptionPriceGivenExceptionalDateTime) {
   auto time = detail::fromRfc3339("2021-09-29T06:42:15.725202Z");
   PricePlan::PeakTimeMultiplier peak_time_multiplier(PricePlan::PeakTimeMultiplier::DayOfWeek::WEDNESDAY, 10);

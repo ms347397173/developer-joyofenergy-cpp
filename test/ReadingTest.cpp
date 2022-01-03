@@ -7,6 +7,7 @@ using nlohmann::json;
 using ::testing::Eq;
 using ::testing::SizeIs;
 
+//继承EndpointTest来进行http测试
 class ReadingsTest : public EndpointTest {};
 
 TEST_F(ReadingsTest, ReadReadingShouldRespondWithAllReadingsGivenValidMeter) {
@@ -15,7 +16,8 @@ TEST_F(ReadingsTest, ReadReadingShouldRespondWithAllReadingsGivenValidMeter) {
   ASSERT_THAT(res.result(), Eq(http::status::ok));
   auto body = json::parse(res.body());
   auto readings = body["readings"];
-  EXPECT_THAT(readings, SizeIs(21));
+  EXPECT_EQ(readings.size(), 21); //和that等价  http://google.github.io/googletest/reference/matchers.html
+  //EXPECT_THAT(readings, SizeIs(21));
 }
 
 TEST_F(ReadingsTest, ReadReadingShouldRespondNotFoundGivenInvalidMeter) {

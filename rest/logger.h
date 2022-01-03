@@ -5,6 +5,7 @@
 
 #include <boost/beast/core/error.hpp>
 
+//简单输出日志
 class logger {
  public:
   virtual void fail(boost::beast::error_code ec, char const *what) = 0;
